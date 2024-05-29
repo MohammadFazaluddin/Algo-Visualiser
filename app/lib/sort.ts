@@ -200,7 +200,6 @@ export class sort {
                     this.drawLine(j, array[j], this.foreColor, drawEvent);
  
                     this.drawLine(j + gap, array[j + gap], this.foreColor, drawEvent);
-                    console.log(array[j]);
  
                     await this.utils.delay(this.delayTime);
 

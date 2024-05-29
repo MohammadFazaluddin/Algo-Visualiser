@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function Canvas() {
 
-    const maxX = 500, maxY = 500;
+    const maxX = 800, maxY = 400;
     const lineWidth = 2;
     const sortO = new sort;
     sortO.delayTime = 10;
@@ -74,15 +74,13 @@ export default function Canvas() {
 
     const merge = async () => {
         arr = await sortO.mergeSort(arr, 0, arr.length);
-        console.log(arr);
     }
     const shell = async () => {
         arr = await sortO.shellSort(arr);
-        console.log(arr);
     }
 
     return (
-        <div className="flex flex-col justify-center items-center p-5">
+        <div className="flex flex-col justify-center items-center p-4">
             <div className="flex justify-center items-center">
                 <canvas ref={canvasRef} width={maxX} height={maxY} className="bg-black" />
             </div>
