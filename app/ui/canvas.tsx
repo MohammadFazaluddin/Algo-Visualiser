@@ -84,27 +84,37 @@ export default function Canvas() {
             <div className="flex justify-center items-center">
                 <canvas ref={canvasRef} width={maxX} height={maxY} className="bg-black" />
             </div>
-            <div className="flex flex-col gap-4 w-36 justify-center items-center">
-                <label>Delay: </label>
-                <input type="number" className="outline-black outline"
+            <div className="flex gap-4 m-10 justify-center items-center">
+                <label htmlFor="delay" className="block mb-2 text-sm font-medium text-gray-900">Delay: </label>
+                <input type="number" id="delay"
                     value={inputDelay}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     onChange={(e) => setInputDelay(parseInt(e.target.value))} />
 
-                <label>Length: </label>
+                <label htmlFor="max-num" className="block mb-2 text-sm font-medium text-gray-900">Length: </label>
                 <input
+                    id="max-num"
                     type="number"
                     max={maxX}
-                    className="outline-black outline"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     value={inputLength} onChange={(e) => setInputLength(parseInt(e.target.value))} />
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex flex-col justify-center items-center">
 
-
-                <button onClick={() => sortO.bubbleSort(arr)} className="m-5">Bubble sort</button>
-                <button onClick={merge} className="m-5">Merge sort</button>
-                <button onClick={shell} className="m-5">Shell sort</button>
-                <button onClick={reset} className="m-5">Reset</button>
-                <button onClick={clearBoard} className="m-5">Clear</button>
+                <div>
+                    <button onClick={() => sortO.bubbleSort(arr)}
+                        className="m-5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Bubble sort</button>
+                    <button onClick={merge}
+                        className="m-5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Merge sort</button>
+                    <button onClick={shell}
+                        className="m-5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Shell sort</button>
+                </div>
+                <div>
+                    <button onClick={reset}
+                        className="m-5 text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Reset</button>
+                    <button onClick={clearBoard}
+                        className="m-5 text-gray-700 hover:text-white border border-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Clear</button>
+                </div>
 
             </div>
         </div>
