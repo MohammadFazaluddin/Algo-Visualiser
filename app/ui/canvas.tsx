@@ -72,11 +72,31 @@ export default function Canvas() {
         }
     }
 
+    const bubble = async () => {
+        if (arr.length == 0) {
+            return;
+        }
+        arr = await sortO.bubbleSort(arr);
+    }
+
     const merge = async () => {
+        if (arr.length == 0) {
+            return;
+        }
         arr = await sortO.mergeSort(arr, 0, arr.length);
     }
     const shell = async () => {
+        if (arr.length == 0) {
+            return;
+        }
         arr = await sortO.shellSort(arr);
+    }
+    const linear = async () => {
+        if (arr.length == 0) {
+            return;
+        }
+        arr = await sortO.linearSort(arr);
+        console.log(arr);
     }
 
     return (
@@ -88,8 +108,9 @@ export default function Canvas() {
                 <label htmlFor="delay" className="block mb-2 text-sm font-medium text-gray-900">Delay: </label>
                 <input type="number" id="delay"
                     value={inputDelay}
+                    minLength={0}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    onChange={(e) => setInputDelay(parseInt(e.target.value))} />
+                    onChange={(e) => setInputDelay(parseInt(e.target.value) >= 0 ? parseInt(e.target.value) : 0)} />
 
                 <label htmlFor="max-num" className="block mb-2 text-sm font-medium text-gray-900">Length: </label>
                 <input
@@ -102,12 +123,21 @@ export default function Canvas() {
             <div className="flex flex-col justify-center items-center">
 
                 <div>
-                    <button onClick={() => sortO.bubbleSort(arr)}
-                        className="m-5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Bubble sort</button>
+                    <button onClick={bubble}
+                        className="m-5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        Bubble sort</button>
+
                     <button onClick={merge}
-                        className="m-5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Merge sort</button>
+                        className="m-5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        Merge sort</button>
+
                     <button onClick={shell}
-                        className="m-5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Shell sort</button>
+                        className="m-5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        Shell sort</button>
+
+                    <button onClick={linear}
+                        className="m-5 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        Linear sort</button>
                 </div>
                 <div>
                     <button onClick={reset}

@@ -26,7 +26,7 @@ export class sort {
         this.canvasRef?.current?.dispatchEvent(event);
     }
 
-    async bubbleSort(arr: number[]): Promise<void> {
+    async bubbleSort(arr: number[]): Promise<any[]> {
         let i: number, j, temp: number;
         let drawEvent = new CustomEvent(EventNames.DRAW_EVENT, {
             detail: {
@@ -65,8 +65,49 @@ export class sort {
                 }
             }
         }
+
+        return arr;
     }
 
+    async linearSort(array: any[]) : Promise<any[]> {
+        let index: number = 0, temp: number;
+
+        let drawEvent = new CustomEvent(EventNames.DRAW_EVENT, {
+            detail: {
+                px: 0,
+                height: 0,
+                color: this.foreColor
+            }
+        });
+
+        for (let i = 0; i < array.length; i++) {
+
+            if (this.stopLoop)
+                return array;
+            index = i;
+
+            for (let j = i + 1; j < array.length; j++)
+                if (array[index] > array[j]) 
+                    index = j;
+
+            temp = array[i];
+
+            this.drawLine(i, array[i], this.backColor, drawEvent);
+
+            this.drawLine(index, array[index], this.backColor, drawEvent);
+
+            array[i] = array[index];
+            array[index] = temp;
+
+            this.drawLine(i, array[i], this.foreColor, drawEvent);
+
+            this.drawLine(index, array[index], this.foreColor, drawEvent);
+
+            await this.utils.delay(this.delayTime);
+        }
+
+        return array;
+    }
 
     async mergeSort(array: any[], leftStart: number, rightStart: number): Promise<any[]> {
         if (array.length <= 1) {
@@ -80,7 +121,8 @@ export class sort {
         const middle = Math.floor(array.length / 2);
         const leftHalf = array.slice(0, middle);
         const rightHalf = array.slice(middle);
-        return await this.merge(await this.mergeSort(leftHalf, leftStart, middleStart),
+        return await this.merge(
+            await this.mergeSort(leftHalf, leftStart, middleStart),
             await this.mergeSort(rightHalf, middleStart + 1, rightStart),
             leftStart, middleStart + 1);
     }
@@ -93,7 +135,6 @@ export class sort {
         if (this.stopLoop) {
             return result;
         }
-
 
         let drawEvent = new CustomEvent(EventNames.DRAW_EVENT, {
             detail: {
@@ -110,7 +151,6 @@ export class sort {
                 return result;
             }
             if (left[leftIndex] < right[rightIndex]) {
-                // erase previous drawing 
 
                 this.drawLine(leftStart, this.maxY, this.backColor, drawEvent);
 
@@ -133,18 +173,6 @@ export class sort {
             await this.utils.delay(this.delayTime);
         }
 
-        while (leftIndex < left.length) {
-            if (this.stopLoop) {
-                return result;
-            }
-            this.drawLine(leftStart, this.maxY, this.backColor, drawEvent);
-
-            this.drawLine(leftStart, left[leftIndex], this.foreColor, drawEvent);
-
-            result.push(left[leftIndex++])
-            await this.utils.delay(this.delayTime);
-        }
-
         while (rightIndex < right.length) {
             if (this.stopLoop) {
                 return result;
@@ -154,10 +182,26 @@ export class sort {
 
             this.drawLine(rightStart, right[rightIndex], this.foreColor, drawEvent);
 
-            result.push(right[rightIndex++]);
+            result.push(right[rightIndex]);
+            rightIndex++;
             rightStart++;
             await this.utils.delay(this.delayTime);
         }
+
+        while (leftIndex < left.length) {
+            if (this.stopLoop) {
+                return result;
+            }
+            this.drawLine(leftStart, this.maxY, this.backColor, drawEvent);
+
+            this.drawLine(leftStart, left[leftIndex], this.foreColor, drawEvent);
+
+            result.push(left[leftIndex])
+            leftIndex++;
+            leftStart++;
+            await this.utils.delay(this.delayTime);
+        }
+
 
         for (let num = 0; num < result.length; num++) {
             if (this.stopLoop) {
@@ -184,23 +228,23 @@ export class sort {
                 color: this.foreColor
             }
         });
- 
+
         for (gap = Math.floor(array.length / 2); gap > 0; gap = Math.floor(gap / 2)) {
             for (i = gap; i < array.length; i++) {
                 for (j = i - gap; j >= 0 && array[j] > array[j + gap]; j -= gap) {
                     temp = array[j + gap];
- 
+
                     this.drawLine(j, array[j], this.backColor, drawEvent);
- 
+
                     this.drawLine(j + gap, array[j + gap], this.backColor, drawEvent);
- 
+
                     array[j + gap] = array[j];
                     array[j] = temp;
- 
+
                     this.drawLine(j, array[j], this.foreColor, drawEvent);
- 
+
                     this.drawLine(j + gap, array[j + gap], this.foreColor, drawEvent);
- 
+
                     await this.utils.delay(this.delayTime);
 
                     if (this.stopLoop) {
@@ -208,7 +252,7 @@ export class sort {
                     }
                 }
             }
-        } 
+        }
         return array;
 
     }
